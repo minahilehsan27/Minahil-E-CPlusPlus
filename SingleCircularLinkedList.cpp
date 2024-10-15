@@ -175,6 +175,7 @@ bool deleteAfter(T value)
 	}
 	return false;
 }
+
 	~CircularLinkedList()
 	{
 		if (head != nullptr && (getLength() > 0))
@@ -183,4 +184,61 @@ bool deleteAfter(T value)
 			while (length > 0) { deleteAtTail(); length--; }
 		}
 	}
+
 };
+template <typename T>
+bool DeleteEvenNodes(Node<T>*& head)
+{
+	if (!head) return false;
+	Node<T>* current = head;
+	Node<T>* prev = nullptr;
+	if (head->next == head) 
+	{
+		if (head->data % 2 == 0) 
+		{
+			delete head;
+			head = nullptr;
+			return true;
+		}
+		else 
+			return false;
+	}
+	bool deleted = false;
+	do 
+	{
+		if (current->data % 2 == 0) 
+		{
+			if (current == head)
+			{
+				Node<T>* last = head;
+				while (last->next != head) {
+					last = last->next;
+				}
+				head = head->next;
+				last->next = head;
+				delete current;
+				current = head; 
+			}
+			else
+			{
+				prev->next = current->next;
+				delete current;
+				current = prev->next;
+			}
+			deleted = true; 
+		}
+		else 
+		{
+			prev = current;
+			current = current->next;
+		}
+	} while (current != head);
+	if (head && head->next == head && head->data % 2 == 0) {
+		delete head;
+		head = nullptr;
+		deleted = true;
+	}
+
+	return deleted;
+}
+
