@@ -165,6 +165,16 @@ public:
 		}
 		return false;
 	}
+bool deleteAfter(T value)
+{
+	Node<T>* checker = search(value);
+	if (checker)
+	{
+		if (checker->next == head) { return false; }
+		Node<T>* toDelete = checker->next; checker->next = toDelete->next; delete toDelete; return true;
+	}
+	return false;
+}
 	~CircularLinkedList()
 	{
 		if (head != nullptr && (getLength() > 0))
